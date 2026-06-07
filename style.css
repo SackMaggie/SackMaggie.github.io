@@ -1378,7 +1378,10 @@ footer {
   margin-bottom: 10px;
 }
 .strat-fb-success { color: var(--green); }
-.strat-fb-fail    { color: var(--red2); }
+.strat-fb-fail    { color: var(--red2); white-space: pre-line; }
+.strat-fb-hard    { color: #f5a000; }
+
+#strat-sequence.shake { animation: shake 0.2s ease; }
 
 #strat-start-btn {
   font-family: var(--stencil);

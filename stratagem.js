@@ -9,9 +9,10 @@ const SND_MAP   = { U:'4_U.mp3', D:'1_D.mp3', L:'2_L.mp3', R:'3_R.mp3' };
 
 // Timer constants (matching the original game)
 const TOTAL_TIME     = 10000;  // 10s start
-const BONUS_NORMAL   = 500;    // +0.5s per key in normal
-const BONUS_HARD     = 200;    // +0.2s per key in hard
-const TICK           = 16;     // ~60fps
+const BONUS_NORMAL   = 1500;   // +1.5s on stratagem complete in normal
+const BONUS_HARD     = 800;    // +0.8s on stratagem complete in hard
+const HITLAG         = 200;    // ms pause between stratagems (timer stops, keys blocked)
+const SHAKE_TIME     = 200;    // ms shake animation on wrong key
 
 let stratagems    = [];
 let current       = null;
@@ -21,7 +22,7 @@ let highScore     = parseInt(sessionStorage.getItem('stratHigh')  || '0');
 let timeLeft      = TOTAL_TIME;
 let timerRaf      = null;
 let lastTick      = null;
-let gameActive    = false;
+let gameState     = 'idle'; // 'idle' | 'running' | 'hitlag' | 'over'
 let hardMode      = false;
 let panelOpen     = false;
 let gameKeyFn     = null;
@@ -237,7 +238,7 @@ function updateModeLabel() {
 function resetUI() {
   score = parseInt(sessionStorage.getItem('stratScore') || '0');
   highScore = parseInt(sessionStorage.getItem('stratHigh') || '0');
-  gameActive = false;
+  gameState = 'idle';
   stopTimer();
   setEl('strat-score', score);
   setEl('strat-high', highScore);
@@ -254,10 +255,13 @@ function resetUI() {
 function startRound() {
   document.getElementById('strat-start-btn').style.display = 'none';
   setEl('strat-feedback', '');
+  score = 0;
+  sessionStorage.setItem('stratScore', score);
+  setEl('strat-score', score);
   pick();
   timeLeft  = TOTAL_TIME;
   lastTick  = performance.now();
-  gameActive = true;
+  gameState = 'running';
   tickTimer();
 }
 
@@ -319,140 +323,139 @@ function handleKey(e) {
   if (!panelOpen) return;
   const dir = KEY_MAP[e.key];
   if (!dir) return;
-  e.stopPropagation(); // suppress easter egg listener
+  e.stopPropagation();
   e.preventDefault();
-  if (!gameActive) return;
+
+  // Game over screen — any key restarts
+  if (gameState === 'over') {
+    beginNewGame();
+    return;
+  }
+
+  if (gameState !== 'running') return; // idle or hitlag — ignore
 
   // Play directional sound
   if (SND_MAP[dir]) playSound(SND_MAP[dir], 0.7);
   else sfxKey();
 
-  inputProgress.push(dir);
-  const idx = inputProgress.length - 1;
+  const expected = current.keys[inputProgress.length];
 
-  // Highlight
-  const sk = document.getElementById(`sk-${idx}`);
-  if (sk) sk.classList.add('active');
-  renderInput();
+  if (dir === expected) {
+    inputProgress.push(dir);
+    const idx = inputProgress.length - 1;
+    const sk = document.getElementById(`sk-${idx}`);
+    if (sk) sk.classList.add('active');
+    renderInput();
 
-  if (dir !== current.keys[idx]) {
-    onFail();
-    return;
-  }
-
-  if (inputProgress.length === current.keys.length) {
-    onSuccess();
+    if (inputProgress.length === current.keys.length) {
+      onSuccess();
+    }
+  } else {
+    onWrongKey();
   }
 }
 
+function shakeArrows() {
+  const seq = document.getElementById('strat-sequence');
+  if (!seq) return;
+  seq.classList.add('shake');
+  setTimeout(() => seq.classList.remove('shake'), SHAKE_TIME);
+}
+
+function onWrongKey() {
+  // Instant skip to next stratagem — no hitlag, timer keeps running
+  current.keys.forEach((_,i) => { const el=document.getElementById(`sk-${i}`); if(el) el.classList.add('wrong'); });
+  shakeArrows();
+  sfxFail();
+  setFeedback('✕', 'fail');
+  pick();
+  setTimeout(clearFeedback, SHAKE_TIME);
+}
+
 function onSuccess() {
-  gameActive = false;
+  gameState = 'hitlag';
   stopTimer();
+
   score++;
   sessionStorage.setItem('stratScore', score);
   if (score > highScore) { highScore = score; sessionStorage.setItem('stratHigh', highScore); }
   setEl('strat-score', score);
   setEl('strat-high', highScore);
 
-  // Time bonus only on full stratagem completion
+  // Time bonus on full stratagem completion
   const bonus = hardMode ? BONUS_HARD : BONUS_NORMAL;
-  timeLeft = Math.min(timeLeft + bonus, TOTAL_TIME * 1.5);
+  timeLeft = Math.min(timeLeft + bonus, TOTAL_TIME);
 
   current.keys.forEach((_,i) => { const el=document.getElementById(`sk-${i}`); if(el) el.classList.add('correct'); });
+  sfxSuccess();
 
   // Check Eagle 500KG → trigger hard mode
-  const wasEagle = current.name === EAGLE_500 || current.name.includes('500KG');
-  if (wasEagle && !hardMode) {
+  const wasEagle = !hardMode && (current.name === EAGLE_500 || current.name.includes('500KG'));
+  if (wasEagle) {
     setFeedback('⚠ HARD MODE ACTIVATED', 'hard');
     sfxHard();
     setTimeout(() => {
       clearFeedback();
       hardMode = true;
       updateModeLabel();
-      document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('correct','active'));
-      gameActive = true;
-      timeLeft = TOTAL_TIME;
-      lastTick = performance.now();
-      pick();
-      tickTimer();
+      nextStratagem();
     }, 1500);
   } else {
-    setFeedback('✔ STRATAGEM CONFIRMED', 'success');
-    sfxSuccess();
+    setFeedback('✔ CONFIRMED', 'success');
     setTimeout(() => {
       clearFeedback();
-      document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('correct','active'));
-      gameActive = true;
-      pick();
-      tickTimer();
-    }, 700);
+      nextStratagem();
+    }, HITLAG);
   }
 }
 
-function onFail() {
-  gameActive = false;
+function nextStratagem() {
+  document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('correct','active'));
+  lastTick = performance.now();
+  gameState = 'running';
+  pick();
+  tickTimer();
+}
+
+function onGameOver() {
+  gameState = 'over';
   stopTimer();
   sfxFail();
   playSound('GameOver1.mp3', 0.8);
 
   current.keys.forEach((_,i) => { const el=document.getElementById(`sk-${i}`); if(el) el.classList.add('wrong'); });
-  setFeedback(`✕ FAILED — SCORE: ${score}`, 'fail');
 
-  // Reset score on fail
-  score = 0;
-  sessionStorage.setItem('stratScore', score);
-  setEl('strat-score', score);
+  if (score > highScore) { highScore = score; sessionStorage.setItem('stratHigh', highScore); }
+  setEl('strat-high', highScore);
 
-  // Hard mode resets to normal on fail
-  if (hardMode) {
-    hardMode = false;
-    updateModeLabel();
-  }
-
-  setTimeout(() => {
-    clearFeedback();
-    document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('wrong','active'));
-    timeLeft  = TOTAL_TIME;
-    lastTick  = performance.now();
-    gameActive = true;
-    pick();
-    tickTimer();
-  }, 1400);
+  setFeedback(`⏱ GAME OVER — SCORE: ${score}\n[ ANY KEY TO RESTART ]`, 'fail');
+  document.getElementById('strat-start-btn').style.display = 'none';
 }
 
-function onTimeOut() {
-  gameActive = false;
-  stopTimer();
-  sfxFail();
-  current.keys.forEach((_,i) => { const el=document.getElementById(`sk-${i}`); if(el) el.classList.add('wrong'); });
-  setFeedback(`⏱ TIME OUT — SCORE: ${score}`, 'fail');
-
+function beginNewGame() {
+  if (hardMode) { hardMode = false; updateModeLabel(); }
+  clearFeedback();
+  document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('wrong','active'));
   score = 0;
   sessionStorage.setItem('stratScore', score);
   setEl('strat-score', score);
-  if (hardMode) { hardMode = false; updateModeLabel(); }
-
-  setTimeout(() => {
-    clearFeedback();
-    document.querySelectorAll('.strat-key').forEach(el => el.classList.remove('wrong','active'));
-    timeLeft  = TOTAL_TIME;
-    lastTick  = performance.now();
-    gameActive = true;
-    pick();
-    tickTimer();
-  }, 1400);
+  timeLeft  = TOTAL_TIME;
+  lastTick  = performance.now();
+  gameState = 'running';
+  pick();
+  tickTimer();
 }
 
 // ── TIMER ─────────────────────────────────────────────────────
 function tickTimer() {
   stopTimer();
   timerRaf = requestAnimationFrame(function loop(now) {
-    if (!gameActive) return;
+    if (gameState !== 'running') return;
     const dt = now - (lastTick || now);
     lastTick = now;
     timeLeft -= dt;
-    setTimerBar(timeLeft, TOTAL_TIME * 1.5);
-    if (timeLeft <= 0) { onTimeOut(); return; }
+    setTimerBar(timeLeft, TOTAL_TIME);
+    if (timeLeft <= 0) { onGameOver(); return; }
     timerRaf = requestAnimationFrame(loop);
   });
 }
@@ -461,8 +464,8 @@ function stopTimer() {
   if (timerRaf) { cancelAnimationFrame(timerRaf); timerRaf = null; }
 }
 
-function setTimerBar(current, max) {
-  const pct = Math.max(0, Math.min(100, (current / max) * 100));
+function setTimerBar(val, max) {
+  const pct = Math.max(0, Math.min(100, (val / max) * 100));
   const bar = document.getElementById('strat-timer-bar');
   if (!bar) return;
   bar.style.width = pct + '%';
