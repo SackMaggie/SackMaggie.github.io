@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ataphon Srilakham — Senior Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- BOOT SCREEN -->
+  <div id="terminal-overlay" title="Click or press any key to skip">
+    <div id="terminal-box">
+      <div class="terminal-bar">
+        <span class="boot-label">◈ SUPER EARTH DEFENSE NETWORK — PERSONNEL FILE</span>
+      </div>
+      <div id="terminal-output"></div>
+      <div class="terminal-cursor-line">
+        <span class="prompt">▶ </span><span id="terminal-cursor" class="cursor">█</span>
+      </div>
+      <div class="terminal-skip">CLICK OR PRESS ANY KEY TO SKIP</div>
+    </div>
+  </div>
+
+  <!-- EASTER EGG -->
+  <div id="easter-egg" class="hidden">
+    <div id="easter-content">
+      <div class="ee-stripes"></div>
+      <div class="ee-inner">
+        <div class="ee-icon">👾</div>
+        <h2>⚠ CLASSIFIED ⚠</h2>
+        <p class="ee-title">OPERATIVE BACKGROUND: GAME SECTOR</p>
+        <p class="ee-body">Before defending democracy, this engineer built the simulations. Multiplayer worlds. Real-time servers. Virtual battles fought on Android, iOS, and PC.</p>
+        <p class="ee-sub">Old habits die hard. Once a game dev, always a game dev.</p>
+        <button id="close-easter">[ RETURN TO DUTY ]</button>
+      </div>
+      <div class="ee-stripes"></div>
+    </div>
+  </div>
+
+  <!-- MAIN SITE -->
+  <div id="main-site" class="hidden">
+
+    <nav>
+      <div class="nav-logo">
+        <span class="nav-emblem">⊕</span> ATAPHON.EXE
+      </div>
+      <ul>
+        <li><a href="#about">INTEL <span class="nav-sub">/ About</span></a></li>
+        <li><a href="#stack">ARSENAL <span class="nav-sub">/ Skills</span></a></li>
+        <li><a href="#experience">LOG <span class="nav-sub">/ Experience</span></a></li>
+        <li><a href="#certs">MEDALS <span class="nav-sub">/ Certs</span></a></li>
+        <li><a href="#fieldops">FIELD OPS <span class="nav-sub">/ GitHub</span></a></li>
+        <li><a href="#contact">COMMS <span class="nav-sub">/ Contact</span></a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="status-dot"></span> ACTIVE
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-bg-text">DEMOCRACY</div>
+      <div class="warning-stripe top-stripe"></div>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <p class="hero-clearance">// CLEARANCE: SENIOR ENGINEER //</p>
+          <h1>ATAPHON<br><span class="hero-surname">SRILAKHAM</span></h1>
+          <div class="hero-divider"></div>
+          <p class="hero-title">SENIOR SOFTWARE ENGINEER<br>& SOLUTION ARCHITECT</p>
+          <p class="hero-sub">Fintech · Event-Driven Systems · C# / .NET · On-Prem Cloud</p>
+          <div class="hero-tags">
+            <span>BANGKOK, TH</span>
+            <span id="exp-hero"></span>
+            <span>DEPLOYED</span>
+          </div>
+          <div class="hero-buttons">
+            <a href="#experience" class="btn-primary">VIEW DEPLOYMENT LOG</a>
+            <a href="#contact" class="btn-outline">OPEN COMMS</a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="dossier-card">
+            <div class="dossier-header">
+              <span>◈ OPERATIVE DOSSIER</span>
+              <span class="dossier-id">ID: ATH-001</span>
+            </div>
+            <div class="dossier-photo-wrap">
+              <img src="photo.jpg" alt="Ataphon Srilakham" class="dossier-photo" />
+              <div class="dossier-photo-label">OPERATIVE PHOTO</div>
+            </div>
+            <div class="dossier-body">
+              <div class="dossier-row">
+                <span class="dr-label">DESIGNATION</span>
+                <span class="dr-val">Solution Architect</span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">CURRENT OP</span>
+                <span class="dr-val">2C2P · Acquiring Team</span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">EXPERIENCE</span>
+                <span class="dr-val" id="exp-dossier"></span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">PRIMARY WEAPON</span>
+                <span class="dr-val">C# / ASP.NET</span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">SUPPORT WEAPON</span>
+                <span class="dr-val">React / TypeScript</span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">ARCHITECTURE</span>
+                <span class="dr-val">Event-Driven · YARP · BFF</span>
+              </div>
+              <div class="dossier-row">
+                <span class="dr-label">ENGLISH</span>
+                <span class="dr-val">C1 Advanced (EF SET 69/100)</span>
+              </div>
+              <div class="dossier-row acquiring">
+                <span class="dr-label">STATUS</span>
+                <span class="dr-val status-open">DEPLOYED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="warning-stripe bottom-stripe"></div>
+    </section>
+
+    <!-- ABOUT / INTEL -->
+    <section id="about">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">01</span>
+          <h2>OPERATIVE INTEL</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>Engineer with <strong><span id="exp-about"></span></strong> of experience delivering online, real-time systems — starting from multiplayer game backends and evolving into ASP.NET APIs, on-prem cloud infrastructure, and solution architecture.</p>
+            <p>Today I design and implement end-to-end solutions around <strong>C#/.NET, React, Ceph RGW</strong> (S3-compatible object storage), and <strong>Keycloak</strong> (OIDC/IAM) in strictly on-premise environments. I've led migrations from legacy monoliths to containerized, observable services — introducing API gateways, event-driven messaging, idempotent APIs, and hybrid caching.</p>
+            <p>Earlier in my career I spent several years as a <strong>Unity developer</strong> building real-time multiplayer games for Android/iOS/PC — deep exposure to networking, matchmaking, live-service ops, and in-app payments.</p>
+            <p>Targeting <strong>Solution Architect / Senior Engineer</strong> roles in fintech and enterprise. Currently leveling up: <span class="inline-tag">Azure</span> <span class="inline-tag">AWS</span> <span class="inline-tag">Terraform</span></p>
+          </div>
+          <div class="fun-fact-card">
+            <div class="fact-header">⚠ FIELD REPORT</div>
+            <p id="fun-fact-text">Loading...</p>
+            <button id="next-fact">[ NEXT TRANSMISSION ]</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARSENAL / STACK -->
+    <section id="stack">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">02</span>
+          <h2>ARSENAL</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="stack-grid">
+          <div class="stack-group">
+            <h3>⚔ BACKEND</h3>
+            <div class="tags">
+              <span>C#</span><span>ASP.NET Core</span><span>YARP</span><span>BFF Pattern</span><span>REST APIs</span><span>Event-Driven</span><span>Idempotent APIs</span><span>Hybrid Caching</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <h3>🖥 FRONTEND</h3>
+            <div class="tags">
+              <span>React</span><span>TypeScript</span><span>JavaScript</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <h3>🛡 INFRASTRUCTURE</h3>
+            <div class="tags">
+              <span>Docker</span><span>On-Prem Cloud</span><span>Ceph RGW (S3)</span><span>Keycloak (OIDC)</span><span>JWT Security</span><span>CI/CD</span><span>Health Checks</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <h3>📡 OBSERVABILITY</h3>
+            <div class="tags">
+              <span>SigNoz</span><span>Distributed Tracing</span><span>Centralized Logging</span><span>Metrics</span>
+            </div>
+          </div>
+          <div class="stack-group">
+            <h3>👾 GAME OPS (PAST)</h3>
+            <div class="tags game">
+              <span>Unity (C#)</span><span>Multiplayer Networking</span><span>UDP / WebSocket</span><span>Matchmaking</span><span>Android / iOS / PC / WebGL</span><span>Google/Apple IAP</span><span>Unity Gaming Services</span>
+            </div>
+          </div>
+          <div class="stack-group learning-group">
+            <h3>⚡ INCOMING STRATAGEM</h3>
+            <div class="tags learning">
+              <span>Azure ⚡</span><span>AWS ⚡</span><span>Terraform ⚡</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPLOYMENT LOG / EXPERIENCE -->
+    <section id="experience">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">03</span>
+          <h2>DEPLOYMENT LOG</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+
+          <div class="timeline-item active-op">
+            <div class="tl-badge">ACTIVE</div>
+            <div class="tl-header">
+              <div>
+                <h3>Senior Software Engineer</h3>
+                <p class="tl-company">2C2P · Full-time · Acquiring Team</p>
+              </div>
+              <div class="tl-meta">
+                <span class="tl-date">Feb 2026 – Present</span>
+                <span class="tl-loc">Bangkok · On-site</span>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              <li><strong>Won the company hackathon — even before passing probation</strong> — with an AI-powered knowledge base enabling LLMs to guide developers through 2C2P payment gateway integration. Adopted by the company and showcased in the opening keynote at <strong>AWS Summit Bangkok</strong>.</li>
+              <li>Implementing <a href="https://en.wikipedia.org/wiki/ISO_8583" target="_blank" class="tl-link">ISO 8583</a> financial messaging across card schemes (AMEX, UPI, VISA in progress) — including building a <strong>TCP multiplex proxy</strong> that routes financial messages at the protocol level by ISO field, and exploring JPOS for deep protocol work.</li>
+              <li>Built a merchant data sync pipeline — automating batch file processing for UPI merchant onboarding and synchronization across the acquiring network.</li>
+              <li>Migrating legacy <strong>.NET Framework / WCF</strong> services to <strong>.NET Core</strong> within a cross-functional team of 15 (dev, QA, SA, DevOps, infra, security) serving payment infrastructure at scale across Southeast Asia.</li>
+              <li>Conducting code reviews, mentoring team members, and building internal knowledge documentation to raise team-wide engineering standards.</li>
+            </ul>
+            <div class="tl-tags"><span>ISO 8583</span><span>AMEX</span><span>.NET Core</span><span>Fintech</span><span>Acquiring</span><span>AI / Knowledge Base</span></div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="tl-header">
+              <div>
+                <h3>Software Engineer</h3>
+                <p class="tl-company">Hitachi Channel Solutions (Thailand) · Full-time</p>
+              </div>
+              <div class="tl-meta">
+                <span class="tl-date">Apr 2025 – Feb 2026 · 11 mos</span>
+                <span class="tl-loc">Bangkok · On-site</span>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Led full-stack development for internal and customer-facing systems using ASP.NET APIs + React.</li>
+              <li>Migrated legacy monolithic applications from manual, unversioned deployments to containerized services with proper versioning and health checks.</li>
+              <li>Designed on-prem "cloud-style" infrastructure using <strong>Ceph RGW</strong> (S3) for object storage and <strong>Keycloak</strong> (OIDC/IAM) for JWT-based API security.</li>
+              <li>Introduced <strong>YARP API gateway</strong> and BFF patterns, plus event-driven and idempotent API design to improve reliability and evolvability.</li>
+              <li>Deployed <strong>SigNoz</strong> and standardized logging, metrics, and distributed tracing across services.</li>
+              <li>Frequently stepped in to correct flawed solution designs and deliver working end-to-end implementations under tight timelines.</li>
+            </ul>
+            <div class="tl-tags"><span>ASP.NET</span><span>React</span><span>Docker</span><span>Ceph</span><span>Keycloak</span><span>YARP</span><span>SigNoz</span></div>
+          </div>
+
+          <div class="timeline-item break-item">
+            <div class="tl-header">
+              <div>
+                <h3>Career Transition</h3>
+                <p class="tl-company">Career Break · Self-study</p>
+              </div>
+              <div class="tl-meta">
+                <span class="tl-date">Feb 2025 – Mar 2025 · 2 mos</span>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Focused on strengthening ASP.NET Core, cloud-native design patterns, and DevOps practices. Searching for roles closer to backend / SaaS architecture work.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item game-item">
+            <div class="tl-badge game-badge">GAME DEV ERA</div>
+            <div class="tl-header">
+              <div>
+                <h3>Senior Unity Developer</h3>
+                <p class="tl-company">MetaEarn Company Limited · Full-time</p>
+              </div>
+              <div class="tl-meta">
+                <span class="tl-date">Jul 2023 – Feb 2025 · 1 yr 8 mos</span>
+                <span class="tl-loc">Bangkok</span>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Built and operated real-time, server-authoritative multiplayer game backends for Android/iOS/PC/WebGL using C#, dedicated servers, UDP/WebSocket, and REST APIs.</li>
+              <li>Designed and implemented integrations with Google/Apple/Facebook auth and in-app payments, plus Unity Gaming Services (Remote Config, Analytics, IAP, Friends).</li>
+              <li>Owned game infrastructure and live ops: remote patching, asset management, client/server versioning, data import pipelines, and internal tools.</li>
+            </ul>
+            <div class="tl-tags game"><span>Unity</span><span>C#</span><span>Multiplayer</span><span>UDP/WebSocket</span><span>Android/iOS</span><span>WebGL</span><span>IAP</span></div>
+          </div>
+
+          <div class="timeline-item game-item">
+            <div class="tl-header">
+              <div>
+                <h3>Unity Developer</h3>
+                <p class="tl-company">Game Square Interactive Co., Ltd. · Full-time</p>
+              </div>
+              <div class="tl-meta">
+                <span class="tl-date">Mar 2019 – Jul 2023 · 4 yrs 5 mos</span>
+                <span class="tl-loc">Bangkok · On-site</span>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              <li>Developed features for a live-service multiplayer 2D isometric game: customization systems, inventory, shops, navigation, chat, and events.</li>
+              <li>Built backend-supporting tools (item import, map content tooling, progression tracking) and UIs improving player experience and internal workflows.</li>
+              <li>Collaborated closely with designers and artists to ship frequent updates tuned on live player behavior.</li>
+            </ul>
+            <div class="tl-tags game"><span>Unity</span><span>C#</span><span>Live Service</span><span>Multiplayer 2D</span><span>Tools</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">04</span>
+          <h2>TRAINING ACADEMY</h2>
+
+          <div class="section-line"></div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <h3>Bachelor of Engineering — Computer Engineering</h3>
+            <p class="edu-school">Srinakharinwirot University · Graduated 2018</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDALS / CERTS -->
+    <section id="certs">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">05</span>
+          <h2>MEDALS &amp; COMMENDATIONS</h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="certs-grid">
+
+          <div class="cert-card gold">
+            <div class="cert-ribbon">🏆</div>
+            <div class="cert-body">
+              <p class="cert-issuer">2C2P</p>
+              <h3>Hackathon Winner</h3>
+              <p class="cert-date">Issued Mar 2026</p>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-ribbon">📜</div>
+            <div class="cert-body">
+              <p class="cert-issuer">freeCodeCamp × Microsoft</p>
+              <h3>Foundational C# with Microsoft</h3>
+              <p class="cert-date">Issued Mar 2025</p>
+              <a href="https://www.freecodecamp.org/certification/ataphon-srilakham/foundational-c-sharp-with-microsoft" target="_blank" class="cert-link">VIEW CREDENTIAL →</a>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-ribbon">🗣</div>
+            <div class="cert-body">
+              <p class="cert-issuer">EF SET</p>
+              <h3>English Certificate — C1 Advanced</h3>
+              <p class="cert-score">62 / 100</p>
+              <p class="cert-date">Issued Jan 2025 · ID: HGPUz8</p>
+              <a href="https://cert.efset.org/en/HGPUz8" target="_blank" class="cert-link">VIEW CREDENTIAL →</a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD OPS / GITHUB -->
+    <section id="fieldops">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-num">06</span>
+          <h2>FIELD OPS</h2>
+          <div class="section-line"></div>
+        </div>
+        <p class="fieldops-sub">Public missions on GitHub — <a href="https://github.com/SackMaggie" target="_blank" class="inline-link">SackMaggie</a></p>
+
+        <!-- Contribution graph — last 52 weeks -->
+        <div class="contrib-wrap" style="margin-bottom:16px;">
+          <div class="contrib-header">
+            <span>◈ CONTRIBUTION GRID</span>
+            <span class="contrib-year">Last 52 weeks</span>
+          </div>
+          <div class="contrib-chart">
+            <img src="https://ghchart.rshah.org/f5c200/SackMaggie" alt="GitHub contributions" onerror="this.parentElement.innerHTML='<p class=contrib-err>[ chart unavailable ]</p>'" />
+          </div>
+        </div>
+
+        <!-- Live activity feed -->
+        <div class="activity-wrap">
+          <div class="contrib-header">
+            <span>◈ RECENT ACTIVITY</span>
+            <span class="contrib-year" id="activity-count">Loading...</span>
+          </div>
+          <div id="activity-feed" class="activity-feed">
+            <p class="repo-loading">▶ FETCHING ACTIVITY LOG...</p>
+          </div>
+        </div>
+
+        <!-- Live repo cards -->
+        <div id="repo-grid" class="repo-grid">
+          <div class="repo-loading">▶ FETCHING MISSION DATA...</div>
+        </div>
+        <a href="https://github.com/SackMaggie?tab=repositories" target="_blank" class="btn-outline view-all-btn">
+          VIEW ALL REPOSITORIES →
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTACT / COMMS -->
+    <section id="contact">
+      <div class="section-inner contact-inner">
+        <div class="warning-stripe contact-stripe"></div>
+        <div class="contact-content">
+          <div class="section-header centered">
+            <span class="section-num">07</span>
+            <h2>OPEN COMMS</h2>
+            <div class="section-line"></div>
+          </div>
+          <p class="contact-sub">Currently serving as a <strong>Senior Software Engineer</strong> at 2C2P — happily deployed. Not actively looking, but if you've got something worth hearing, the channel is open.</p>
+          <div class="contact-channels">
+            <a href="https://www.linkedin.com/in/ataphon-srilakham/" target="_blank" class="channel-card preferred">
+              <span class="channel-icon">💼</span>
+              <div>
+                <p class="channel-label">PREFERRED</p>
+                <p class="channel-name">LinkedIn DM</p>
+                <p class="channel-handle">ataphon-srilakham</p>
+              </div>
+            </a>
+            <a href="https://github.com/SackMaggie" target="_blank" class="channel-card">
+              <span class="channel-icon">🐙</span>
+              <div>
+                <p class="channel-label">CODE</p>
+                <p class="channel-name">GitHub</p>
+                <p class="channel-handle">SackMaggie</p>
+              </div>
+            </a>
+            <a href="https://steamcommunity.com/id/athpon/" target="_blank" class="channel-card">
+              <span class="channel-icon">🎮</span>
+              <div>
+                <p class="channel-label">OFF DUTY</p>
+                <p class="channel-name">Steam</p>
+                <p class="channel-handle">athpon</p>
+              </div>
+            </a>
+            <a href="mailto:athpon@gmail.com" class="channel-card">
+              <span class="channel-icon">📡</span>
+              <div>
+                <p class="channel-label">EMAIL</p>
+                <p class="channel-name">Direct Mail</p>
+                <p class="channel-handle">athpon@gmail.com</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="warning-stripe contact-stripe"></div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-inner">
+        <span>⊕ ATAPHON SRILAKHAM · <span id="year"></span></span>
+        <span class="footer-hint">↑ → ↓ ↓ ↓ — CALL IN AN EAGLE</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
